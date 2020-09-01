@@ -12,9 +12,12 @@ Module RunningTotal
         Dim badData As Boolean = True
 
         While userInput <> "q"
+            Console.Clear()
             Console.WriteLine("Please select an option.")
             Console.WriteLine("1. Add Item")
             Console.WriteLine("2. Calculate Tax")
+            Console.WriteLine("3. Show Sub Total")
+            Console.WriteLine("4. Show Grand Total")
 
             'User Choice
             userInput = Console.ReadLine()
@@ -35,15 +38,17 @@ Module RunningTotal
                     End Try
                 Loop While badData
 
-                Console.WriteLine("Sub Total: " & runningTotal.ToString("C"))
-
             ElseIf userInput = "2" Then
                 taxAmount = runningTotal * TAXRATE
-                Console.WriteLine("Tax: " & taxAmount.ToString("C")) ' 
+                Console.WriteLine("Tax: " & taxAmount.ToString("C"))
+            ElseIf userInput = "3" Then
+                Console.WriteLine("Sub Total: " & runningTotal.ToString("C"))
+            ElseIf userInput = "4" Then
+                Console.WriteLine("Grand Total: " & (runningTotal + taxAmount).ToString("C"))
             Else
                 'catch all. bad choice
             End If
-
+            Console.ReadLine()
         End While
 
     End Sub
