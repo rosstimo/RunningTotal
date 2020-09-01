@@ -1,41 +1,51 @@
 ﻿Option Strict On
 Option Explicit On
+Option Compare Text
 
 Module RunningTotal
 
     Sub Main()
-        Dim userInput As String
-        Dim runningTotal As Integer
+        Dim userInput As String = ""
+        Dim runningTotal As Decimal
         Const TAXRATE As Decimal = 0.06D
+        Dim taxAmount As Decimal
+        Dim badData As Boolean = True
 
         While userInput <> "q"
             Console.WriteLine("Please select an option.")
             Console.WriteLine("1. Add Item")
             Console.WriteLine("2. Calculate Tax")
 
-            'User Choice???
-            userInput = Console.ReadLine() ' TODO what if item is a $1.50
+            'User Choice
+            userInput = Console.ReadLine()
 
             If userInput = "1" Then
-                Console.WriteLine("Enter the item cost")
-                userInput = Console.ReadLine()
 
-                Try
-                    'runningTotal = runningTotal + CInt(userInput)
-                    runningTotal += CInt(userInput)
-                Catch ex As Exception
-                    'prompt user to give good data  TODO
-                End Try
-                Console.WriteLine("Total: " & runningTotal) 'TODO format as currency
+                Do
+                    Console.WriteLine("Enter the item cost")
+                    userInput = Console.ReadLine()
+                    Try
+                        'runningTotal = runningTotal + CDec(userInput)
+                        runningTotal += CDec(userInput)
+                        badData = False
+                    Catch ex As Exception
+                        'prompt user to give good data
+                        Console.WriteLine("Item cost must be a number")
+                        badData = True
+                    End Try
+                Loop While badData
+
+                Console.WriteLine("Sub Total: " & runningTotal.ToString("C"))
 
             ElseIf userInput = "2" Then
-                Console.WriteLine("Tax: " & runningTotal * TAXRATE) ' 
+                taxAmount = runningTotal * TAXRATE
+                Console.WriteLine("Tax: " & taxAmount.ToString("C")) ' 
             Else
-                'prompt user for good data TODO 
+                'catch all. bad choice
             End If
 
         End While
-        Console.ReadLine()
+
     End Sub
 
 End Module
